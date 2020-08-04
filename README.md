@@ -2,7 +2,7 @@
 
 ![EXAMPLE](https://github.com/Alschain/deformation-transfer/raw/master/RESULTS/dt-horse-camel-face-head.png)
 
-* About this Fork
+# About this Fork
 
 Thanks to [Golevka](https://github.com/Golevka) for the implementation of the _Deformation Transfer for Triangle Meshes_.
 The original project has been done for many years and there are some problems when I'm working on it in macOS Catalina. So I
@@ -10,7 +10,7 @@ fork the project and modify some files to make it work.
 
 ---
 
-* What's This?
+# What's This?
 
 This is an implementation of Deformation Transfer algorithm in ANSI C, which
 could transfer the deformation of one triangle mesh to another. Check this
@@ -21,7 +21,7 @@ detailed explaination of this algorithm and here
 and mesh data.
 
 
-* Compile
+# Compile
 
 You need CHOLMOD and UMFPACK to compile it. These issues could be found in [SuiteSparse](https://github.com/DrTimothyAldenDavis/SuiteSparse).
 Remember to compile metis first and install CHOLMOD & UMFPACK to the ./external location.
@@ -32,7 +32,7 @@ these files in right place.
 After these libs has been set properly, type `make` to build them all.
 
 
-* Try A Shakedown Run
+# Try A Shakedown Run
 
 Run sample_run.sh in bin directory, the resulting deformed target model would
 be shown by our corrstool. The calculation takes about one minute or so
@@ -44,7 +44,7 @@ You can read the comments in sample_run.sh to see how to apply these tools to
 your own .OBJ models.
 
 
-* Usage of Corrstool
+# Usage of Corrstool
 
 Correspondence phase: You need to pick up a small set of marker points to
 specify the semantic correspondence between the source model and the target
