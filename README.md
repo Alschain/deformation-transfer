@@ -38,7 +38,7 @@ Run sample_run.sh in bin directory, the resulting deformed target model would
 be shown by our corrstool. The calculation takes about one minute or so
 (resolving corresponence and deforming 10 models).
 
-[[https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/shakedown_run.png]]
+[shakedown_run](https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/shakedown_run.png)
 
 You can read the comments in sample_run.sh to see how to apply these tools to
 your own .OBJ models.
@@ -48,39 +48,33 @@ your own .OBJ models.
 
 Correspondence phase: You need to pick up a small set of marker points to
 specify the semantic correspondence between the source model and the target
-model, we provided a tool here (corrstool), you can launch it using
+model, we provided a tool here `corrstool`, you can launch it using
 
-#+BEGIN_SRC shell
-    ./corrstool source_model target_model
-#+END_SRC
+`./corrstool source_model target_model`
 
 for example, running this command in bin directory
-    
-#+BEGIN_SRC shell
-    ./corrstool horse_ref.obj camel_ref.obj
-#+END_SRC
+
+`./corrstool horse_ref.obj camel_ref.obj`
      
 would open a window showing the source model at the left panel and target model
 at the right panel, drag your mouse with left mouse button pressed to view the
 model in a different angle (it would change the view angle of the two panels
 simutanously), and drag with right mouse button pressed to zoom the view.
 
-#+CAPTION: Corrstool
-#+LABEL:   corrstool
-[[https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/correstool.png]]
+![correstool](https://github.com/Alschain/deformation-transfer/raw/master/RESULTS/correstool.png)
 
 You can move the cursor to somewhere in the model you want to mark and press
-=P= to mark this point, after having specifed marker points on both models,
-press =A= to "commit" this point pair to correspondence list, if you hit =A= by
-mistake, just hit =U= (undo) to recover from that.
+`P` to mark this point, after having specifed marker points on both models,
+press `A` to "commit" this point pair to correspondence list, if you hit `A` by
+mistake, just hit `U` (undo) to recover from that.
 
 The points you picked up may not right on where your cursor pointed to, this is
 because of marker points can *only* appear on vertices of the mesh model, you can
-view models in wired mode by pressing =M=, and strike it again to get back to
+view models in wired mode by pressing `M`, and strike it again to get back to
 solid mode. If you want to switch to another point on the same piece of triangle, 
-just hit =C= many times until you get what you want.
+just hit `C` many times until you get what you want.
 
-[[https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/wired_mode.png]]
+![wired_mode](https://github.com/Alschain/deformation-transfer/raw/master/RESULTS/wired_mode.png)
 
-After all marker points has been specified, press =W= to write the
+After all marker points has been specified, press `W` to write the
 correspondence to a .cons file (default.cons by default).
