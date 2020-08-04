@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_transpose
@@ -22,17 +21,17 @@ int umfpack_di_transpose
     double Rx [ ]
 ) ;
 
-UF_long umfpack_dl_transpose
+SuiteSparse_long umfpack_dl_transpose
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ],
-    const UF_long P [ ],
-    const UF_long Q [ ],
-    UF_long Rp [ ],
-    UF_long Ri [ ],
+    const SuiteSparse_long P [ ],
+    const SuiteSparse_long Q [ ],
+    SuiteSparse_long Rp [ ],
+    SuiteSparse_long Ri [ ],
     double Rx [ ]
 ) ;
 
@@ -51,19 +50,19 @@ int umfpack_zi_transpose
     int do_conjugate
 ) ;
 
-UF_long umfpack_zl_transpose
+SuiteSparse_long umfpack_zl_transpose
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ], const double Az [ ],
-    const UF_long P [ ],
-    const UF_long Q [ ],
-    UF_long Rp [ ],
-    UF_long Ri [ ],
+    const SuiteSparse_long P [ ],
+    const SuiteSparse_long Q [ ],
+    SuiteSparse_long Rp [ ],
+    SuiteSparse_long Ri [ ],
     double Rx [ ], double Rz [ ],
-    UF_long do_conjugate
+    SuiteSparse_long do_conjugate
 ) ;
 
 /*
@@ -74,10 +73,10 @@ double int Syntax:
     double *Ax, *Rx ;
     status = umfpack_di_transpose (n_row, n_col, Ap, Ai, Ax, P, Q, Rp, Ri, Rx) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri ;
+    SuiteSparse_long n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri ;
     double *Ax, *Rx ;
     status = umfpack_dl_transpose (n_row, n_col, Ap, Ai, Ax, P, Q, Rp, Ri, Rx) ;
 
@@ -89,10 +88,10 @@ complex int Syntax:
     status = umfpack_zi_transpose (n_row, n_col, Ap, Ai, Ax, Az, P, Q,
 	Rp, Ri, Rx, Rz, do_conjugate) ;
 
-complex UF_long Syntax:
+complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri, do_conjugate ;
+    SuiteSparse_long n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri, do_conjugate ;
     double *Ax, *Az, *Rx, *Rz ;
     status = umfpack_zl_transpose (n_row, n_col, Ap, Ai, Ax, Az, P, Q,
 	Rp, Ri, Rx, Rz, do_conjugate) ;
@@ -126,7 +125,7 @@ Returns:
     UMFPACK_ERROR_invalid_permutation if P and/or Q are invalid.
     UMFPACK_ERROR_invalid_matrix if Ap [n_col] < 0, if Ap [0] != 0,
 	if Ap [j] > Ap [j+1] for any j in the range 0 to n_col-1,
-	if any row index i is < 0 or >= n_row, or if the row indexes
+	if any row index i is < 0 or >= n_row, or if the row indices
 	in any column are not in ascending order.
 
 Arguments:
@@ -147,17 +146,17 @@ Arguments:
 
     Int Ai [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
 
-	The nonzero pattern (row indexes) for column j is stored in
-	Ai [(Ap [j]) ... (Ap [j+1]-1)].  The row indexes in a given column j
-	must be in ascending order, and no duplicate row indexes may be present.
-	Row indexes must be in the range 0 to n_row-1 (the matrix is 0-based).
+	The nonzero pattern (row indices) for column j is stored in
+	Ai [(Ap [j]) ... (Ap [j+1]-1)].  The row indices in a given column j
+	must be in ascending order, and no duplicate row indices may be present.
+	Row indices must be in the range 0 to n_row-1 (the matrix is 0-based).
 
     double Ax [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
 			Size 2*nz if Az or Rz are NULL.
     double Az [nz] ;	Input argument, not modified, for complex versions.
 
 	If present, these are the numerical values of the sparse matrix A.
-	The nonzero pattern (row indexes) for column j is stored in
+	The nonzero pattern (row indices) for column j is stored in
 	Ai [(Ap [j]) ... (Ap [j+1]-1)], and the corresponding real numerical
 	values are stored in Ax [(Ap [j]) ... (Ap [j+1]-1)].  The imaginary
 	values are stored in Az [(Ap [j]) ... (Ap [j+1]-1)].  The values are
@@ -194,8 +193,8 @@ Arguments:
 
     Int Ri [nz] ;	Output argument.
 
-	The row indexes of the matrix R = (A (P,Q))' or (A (P,Q)).' , in the
-	same form as the row indexes Ai for the matrix A.
+	The row indices of the matrix R = (A (P,Q))' or (A (P,Q)).' , in the
+	same form as the row indices Ai for the matrix A.
 
     double Rx [nz] ;	Output argument.
 			Size 2*nz if Az or Rz are NULL.

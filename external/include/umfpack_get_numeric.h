@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_get_numeric
@@ -24,18 +23,18 @@ int umfpack_di_get_numeric
     void *Numeric
 ) ;
 
-UF_long umfpack_dl_get_numeric
+SuiteSparse_long umfpack_dl_get_numeric
 (
-    UF_long Lp [ ],
-    UF_long Lj [ ],
+    SuiteSparse_long Lp [ ],
+    SuiteSparse_long Lj [ ],
     double Lx [ ],
-    UF_long Up [ ],
-    UF_long Ui [ ],
+    SuiteSparse_long Up [ ],
+    SuiteSparse_long Ui [ ],
     double Ux [ ],
-    UF_long P [ ],
-    UF_long Q [ ],
+    SuiteSparse_long P [ ],
+    SuiteSparse_long Q [ ],
     double Dx [ ],
-    UF_long *do_recip,
+    SuiteSparse_long *do_recip,
     double Rs [ ],
     void *Numeric
 ) ;
@@ -56,18 +55,18 @@ int umfpack_zi_get_numeric
     void *Numeric
 ) ;
 
-UF_long umfpack_zl_get_numeric
+SuiteSparse_long umfpack_zl_get_numeric
 (
-    UF_long Lp [ ],
-    UF_long Lj [ ],
+    SuiteSparse_long Lp [ ],
+    SuiteSparse_long Lj [ ],
     double Lx [ ], double Lz [ ],
-    UF_long Up [ ],
-    UF_long Ui [ ],
+    SuiteSparse_long Up [ ],
+    SuiteSparse_long Ui [ ],
     double Ux [ ], double Uz [ ],
-    UF_long P [ ],
-    UF_long Q [ ],
+    SuiteSparse_long P [ ],
+    SuiteSparse_long Q [ ],
     double Dx [ ], double Dz [ ],
-    UF_long *do_recip,
+    SuiteSparse_long *do_recip,
     double Rs [ ],
     void *Numeric
 ) ;
@@ -82,11 +81,11 @@ double int Syntax:
     status = umfpack_di_get_numeric (Lp, Lj, Lx, Up, Ui, Ux, P, Q, Dx,
 	&do_recip, Rs, Numeric) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    UF_long *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
+    SuiteSparse_long *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
     double *Lx, *Ux, *Dx, *Rs ;
     status = umfpack_dl_get_numeric (Lp, Lj, Lx, Up, Ui, Ux, P, Q, Dx,
 	&do_recip, Rs, Numeric) ;
@@ -100,16 +99,16 @@ complex int Syntax:
     status = umfpack_zi_get_numeric (Lp, Lj, Lx, Lz, Up, Ui, Ux, Uz, P, Q,
 	Dx, Dz, &do_recip, Rs, Numeric) ;
 
-complex UF_long Syntax:
+complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    UF_long *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
+    SuiteSparse_long *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
     double *Lx, *Lz, *Ux, *Uz, *Dx, *Dz, *Rs ;
     status = umfpack_zl_get_numeric (Lp, Lj, Lx, Lz, Up, Ui, Ux, Uz, P, Q,
 	Dx, Dz, &do_recip, Rs, Numeric) ;
 
-packed complex int/UF_long Syntax:
+packed complex int/SuiteSparse_long Syntax:
 
     Same as above, except Lz, Uz, and Dz are all NULL.
 
@@ -147,7 +146,7 @@ Arguments:
     double Lz [lnz] ;	Output argument for complex versions.
 
 	The n_row-by-min(n_row,n_col) matrix L is returned in compressed-row
-	form.  The column indexes of row i and corresponding numerical values
+	form.  The column indices of row i and corresponding numerical values
 	are in:
 
 	    Lj [Lp [i] ... Lp [i+1]-1]
@@ -155,7 +154,7 @@ Arguments:
 	    Lz [Lp [i] ... Lp [i+1]-1]	imaginary part (complex versions)
 
 	respectively.  Each row is stored in sorted order, from low column
-	indexes to higher.  The last entry in each row is the diagonal, which
+	indices to higher.  The last entry in each row is the diagonal, which
 	is numerically equal to one.  The sizes of Lp, Lj, Lx, and Lz are
 	returned by umfpack_*_get_lunz.    If Lp, Lj, or Lx are not present,
 	then the matrix L is not returned.  This is not an error condition.
@@ -173,7 +172,7 @@ Arguments:
     double Uz [unz] ;	Output argument for complex versions.
 
 	The min(n_row,n_col)-by-n_col matrix U is returned in compressed-column
-	form.  The row indexes of column j and corresponding numerical values
+	form.  The row indices of column j and corresponding numerical values
 	are in
 
 	    Ui [Up [j] ... Up [j+1]-1]
@@ -181,7 +180,7 @@ Arguments:
 	    Uz [Up [j] ... Up [j+1]-1]	imaginary part (complex versions)
 
 	respectively.  Each column is stored in sorted order, from low row
-	indexes to higher.  The last entry in each column is the diagonal
+	indices to higher.  The last entry in each column is the diagonal
 	(assuming that it is nonzero).  The sizes of Up, Ui, Ux, and Uz are
 	returned by umfpack_*_get_lunz.  If Up, Ui, or Ux are not present,
 	then the matrix U is not returned.  This is not an error condition.

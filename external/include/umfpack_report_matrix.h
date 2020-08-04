@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_report_matrix
@@ -19,14 +18,14 @@ int umfpack_di_report_matrix
     const double Control [UMFPACK_CONTROL]
 ) ;
 
-UF_long umfpack_dl_report_matrix
+SuiteSparse_long umfpack_dl_report_matrix
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ],
-    UF_long col_form,
+    SuiteSparse_long col_form,
     const double Control [UMFPACK_CONTROL]
 ) ;
 
@@ -41,14 +40,14 @@ int umfpack_zi_report_matrix
     const double Control [UMFPACK_CONTROL]
 ) ;
 
-UF_long umfpack_zl_report_matrix
+SuiteSparse_long umfpack_zl_report_matrix
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ], const double Az [ ],
-    UF_long col_form,
+    SuiteSparse_long col_form,
     const double Control [UMFPACK_CONTROL]
 ) ;
 
@@ -62,10 +61,10 @@ double int Syntax:
 or:
     status = umfpack_di_report_matrix (n_row, n_col, Ap, Ai, Ax, 0, Control) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_row, n_col, *Ap, *Ai, status ;
+    SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
     double *Ax, Control [UMFPACK_CONTROL] ;
     status = umfpack_dl_report_matrix (n_row, n_col, Ap, Ai, Ax, 1, Control) ;
 or:
@@ -82,10 +81,10 @@ or:
     status = umfpack_zi_report_matrix (n_row, n_col, Ap, Ai, Ax, Az, 0,
         Control) ;
 
-complex UF_long Syntax:
+complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_row, n_col, *Ap, *Ai, status ;
+    SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
     double *Ax, Control [UMFPACK_CONTROL] ;
     status = umfpack_zl_report_matrix (n_row, n_col, Ap, Ai, Ax, Az, 1,
 	Control) ;
@@ -115,7 +114,7 @@ Returns:
     UMFPACK_ERROR_invalid_matrix if Ap [n] < 0, if Ap [0] is not zero,
 	if Ap [j+1] < Ap [j] for any j in the range 0 to n-1,
 	if any row index in Ai is not in the range 0 to ni-1, or
-	if the row indexes in any column are not in
+	if the row indices in any column are not in
 	ascending order, or contain duplicates.
     UMFPACK_ERROR_out_of_memory if out of memory.
 
@@ -132,9 +131,9 @@ Arguments:
 
 	Ap is an integer array of size n+1.  If col_form is true (nonzero),
 	then on input, it holds the "pointers" for the column form of the
-	sparse matrix A.  The row indexes of column j of the matrix A are held
+	sparse matrix A.  The row indices of column j of the matrix A are held
 	in Ai [(Ap [j]) ... (Ap [j+1]-1)].  Otherwise, Ap holds the
-	row pointers, and the column indexes of row j of the matrix are held
+	row pointers, and the column indices of row j of the matrix are held
 	in Ai [(Ap [j]) ... (Ap [j+1]-1)].
 
 	The first entry, Ap [0], must be zero, and Ap [j] <= Ap [j+1] must hold
@@ -143,12 +142,12 @@ Arguments:
 
     Int Ai [nz] ;	Input argument, not modified, of size nz = Ap [n].
 
-	If col_form is true (nonzero), then the nonzero pattern (row indexes)
-	for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)].  Row indexes
+	If col_form is true (nonzero), then the nonzero pattern (row indices)
+	for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)].  Row indices
 	must be in the range 0 to n_row-1 (the matrix is 0-based).
 
-	Otherwise, the nonzero pattern (column indexes) for row j is stored in
-	Ai [(Ap [j]) ... (Ap [j+1]-1)]. Column indexes must be in the range 0
+	Otherwise, the nonzero pattern (column indices) for row j is stored in
+	Ai [(Ap [j]) ... (Ap [j+1]-1)]. Column indices must be in the range 0
 	to n_col-1 (the matrix is 0-based).
 
     double Ax [nz] ;	Input argument, not modified, of size nz = Ap [n].
@@ -156,14 +155,14 @@ Arguments:
 
 	The numerical values of the sparse matrix A.
 
-	If col_form is true (nonzero), then the nonzero pattern (row indexes)
+	If col_form is true (nonzero), then the nonzero pattern (row indices)
 	for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and the
 	corresponding (real) numerical values are stored in
 	Ax [(Ap [j]) ... (Ap [j+1]-1)].  The imaginary parts are stored in
 	Az [(Ap [j]) ... (Ap [j+1]-1)], for the complex versions
 	(see below if Az is NULL).
 
-	Otherwise, the nonzero pattern (column indexes) for row j
+	Otherwise, the nonzero pattern (column indices) for row j
 	is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and the corresponding
 	(real) numerical values are stored in Ax [(Ap [j]) ... (Ap [j+1]-1)].
 	The imaginary parts are stored in Az [(Ap [j]) ... (Ap [j+1]-1)],

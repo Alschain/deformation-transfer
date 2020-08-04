@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_triplet_to_col
@@ -22,18 +21,18 @@ int umfpack_di_triplet_to_col
     int Map [ ]
 ) ;
 
-UF_long umfpack_dl_triplet_to_col
+SuiteSparse_long umfpack_dl_triplet_to_col
 (
-    UF_long n_row,
-    UF_long n_col,
-    UF_long nz,
-    const UF_long Ti [ ],
-    const UF_long Tj [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    SuiteSparse_long nz,
+    const SuiteSparse_long Ti [ ],
+    const SuiteSparse_long Tj [ ],
     const double Tx [ ],
-    UF_long Ap [ ],
-    UF_long Ai [ ],
+    SuiteSparse_long Ap [ ],
+    SuiteSparse_long Ai [ ],
     double Ax [ ],
-    UF_long Map [ ]
+    SuiteSparse_long Map [ ]
 ) ;
 
 int umfpack_zi_triplet_to_col
@@ -50,18 +49,18 @@ int umfpack_zi_triplet_to_col
     int Map [ ]
 ) ;
 
-UF_long umfpack_zl_triplet_to_col
+SuiteSparse_long umfpack_zl_triplet_to_col
 (
-    UF_long n_row,
-    UF_long n_col,
-    UF_long nz,
-    const UF_long Ti [ ],
-    const UF_long Tj [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    SuiteSparse_long nz,
+    const SuiteSparse_long Ti [ ],
+    const SuiteSparse_long Tj [ ],
     const double Tx [ ], const double Tz [ ],
-    UF_long Ap [ ],
-    UF_long Ai [ ],
+    SuiteSparse_long Ap [ ],
+    SuiteSparse_long Ai [ ],
     double Ax [ ], double Az [ ],
-    UF_long Map [ ]
+    SuiteSparse_long Map [ ]
 ) ;
 
 /*
@@ -73,10 +72,10 @@ double int Syntax:
     status = umfpack_di_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx,
 	Ap, Ai, Ax, Map) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
+    SuiteSparse_long n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
     double *Tx, *Ax ;
     status = umfpack_dl_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx,
 	Ap, Ai, Ax, Map) ;
@@ -89,10 +88,10 @@ complex int Syntax:
     status = umfpack_zi_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx, Tz,
 	Ap, Ai, Ax, Az, Map) ;
 
-UF_long Syntax:
+SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
+    SuiteSparse_long n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
     double *Tx, *Tz, *Ax, *Az ;
     status = umfpack_zl_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx, Tz,
 	Ap, Ai, Ax, Az, Map) ;
@@ -134,7 +133,7 @@ Purpose:
 
     Constructing a submatrix is also easy.  Just scan the triplets and remove
     those entries outside the desired subset of 0...n_row-1 and 0...n_col-1,
-    and renumber the indexes according to their position in the subset.
+    and renumber the indices according to their position in the subset.
 
     You can do all these operations on a column-form matrix by first
     converting it to triplet form with umfpack_*_col_to_triplet, doing the
@@ -166,7 +165,7 @@ Arguments:
     Int n_col ;		Input argument, not modified.
 
 	A is an n_row-by-n_col matrix.  Restriction: n_row > 0 and n_col > 0.
-	All row and column indexes in the triplet form must be in the range
+	All row and column indices in the triplet form must be in the range
 	0 to n_row-1 and 0 to n_col-1, respectively.
 
     Int nz ;		Input argument, not modified.
@@ -183,7 +182,7 @@ Arguments:
 	Ti, Tj, Tx, and Tz hold the "triplet" form of a sparse matrix.  The kth
 	nonzero entry is in row i = Ti [k], column j = Tj [k], and the real part
 	of a_ij is Tx [k].  The imaginary part of a_ij is Tz [k], for complex
-	versions.  The row and column indexes i and j must be in the range 0 to
+	versions.  The row and column indices i and j must be in the range 0 to
 	n_row-1 and 0 to n_col-1, respectively.  Duplicate entries may be
 	present; they are summed in the output matrix.  This is not an error
 	condition.  The "triplets" may be in any order.  Tx, Tz, Ax, and Az
@@ -211,10 +210,10 @@ Arguments:
 	Ai is an integer array of size nz on input.  Note that only the first
 	Ap [n_col] entries are used.
 
-	The nonzero pattern (row indexes) for column j is stored in
-	Ai [(Ap [j]) ... (Ap [j+1]-1)].  The row indexes in a given column j
-	are in ascending order, and no duplicate row indexes are present.
-	Row indexes are in the range 0 to n_col-1 (the matrix is 0-based).
+	The nonzero pattern (row indices) for column j is stored in
+	Ai [(Ap [j]) ... (Ap [j+1]-1)].  The row indices in a given column j
+	are in ascending order, and no duplicate row indices are present.
+	Row indices are in the range 0 to n_col-1 (the matrix is 0-based).
 
     double Ax [nz] ;	Output argument.  Size 2*nz if Tz or Az are NULL.
     double Az [nz] ;	Output argument for complex versions.
@@ -226,7 +225,7 @@ Arguments:
 	Ax is optional; if Tx and/or Ax are not present (a (double *) NULL
 	pointer), then Ax is not computed.  If present, Ax holds the
 	numerical values of the the real part of the sparse matrix A and Az
-	holds the imaginary parts.  The nonzero pattern (row indexes) for
+	holds the imaginary parts.  The nonzero pattern (row indices) for
 	column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and the
 	corresponding numerical values are stored in
 	Ax [(Ap [j]) ... (Ap [j+1]-1)].  The imaginary parts are stored in

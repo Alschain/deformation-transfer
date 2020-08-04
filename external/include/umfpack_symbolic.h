@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_symbolic
@@ -20,12 +19,12 @@ int umfpack_di_symbolic
     double Info [UMFPACK_INFO]
 ) ;
 
-UF_long umfpack_dl_symbolic
+SuiteSparse_long umfpack_dl_symbolic
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ],
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
@@ -44,12 +43,12 @@ int umfpack_zi_symbolic
     double Info [UMFPACK_INFO]
 ) ;
 
-UF_long umfpack_zl_symbolic
+SuiteSparse_long umfpack_zl_symbolic
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ], const double Az [ ],
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
@@ -66,11 +65,11 @@ double int Syntax:
     status = umfpack_di_symbolic (n_row, n_col, Ap, Ai, Ax,
 	&Symbolic, Control, Info) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    UF_long n_row, n_col, *Ap, *Ai, status ;
+    SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
     double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax ;
     status = umfpack_dl_symbolic (n_row, n_col, Ap, Ai, Ax,
 	&Symbolic, Control, Info) ;
@@ -84,11 +83,11 @@ complex int Syntax:
     status = umfpack_zi_symbolic (n_row, n_col, Ap, Ai, Ax, Az,
 	&Symbolic, Control, Info) ;
 
-complex UF_long Syntax:
+complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    UF_long n_row, n_col, *Ap, *Ai, status ;
+    SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
     double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax, *Az ;
     status = umfpack_zl_symbolic (n_row, n_col, Ap, Ai, Ax, Az,
 	&Symbolic, Control, Info) ;
@@ -140,10 +139,10 @@ Arguments:
 
     Int Ai [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
 
-	The nonzero pattern (row indexes) for column j is stored in
-	Ai [(Ap [j]) ... (Ap [j+1]-1)].  The row indexes in a given column j
-	must be in ascending order, and no duplicate row indexes may be present.
-	Row indexes must be in the range 0 to n_row-1 (the matrix is 0-based).
+	The nonzero pattern (row indices) for column j is stored in
+	Ai [(Ap [j]) ... (Ap [j+1]-1)].  The row indices in a given column j
+	must be in ascending order, and no duplicate row indices may be present.
+	Row indices must be in the range 0 to n_row-1 (the matrix is 0-based).
 	See umfpack_*_triplet_to_col for how to sort the columns of a matrix
 	and sum up the duplicate entries.  See umfpack_*_report_matrix for how
 	to print the matrix A.
@@ -152,7 +151,7 @@ Arguments:
 			Size 2*nz for packed complex case.
 
 	The numerical values of the sparse matrix A.  The nonzero pattern (row
-	indexes) for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and
+	indices) for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and
 	the corresponding numerical values are stored in
 	Ax [(Ap [j]) ... (Ap [j+1]-1)].  Used only for gathering statistics
         about how many nonzeros are placed on the diagonal by the fill-reducing
@@ -266,6 +265,11 @@ Arguments:
 	    zero, then this is controlled automatically (the unsymmetric
 	    strategy modifies Q, the others do not).  Default: 0.
 
+            Note that the symbolic analysis will in general modify the input
+            ordering Qinit to obtain Q; see umfpack_qsymbolic.h for details.
+            This option ensures Q does not change, as found in the symbolic
+            analysis, but Qinit is in general not the same as Q.
+
 	Control [UMFPACK_AGGRESSIVE]:  If nonzero, aggressive absorption is used
 	    in COLAMD and AMD.  Default: 1.
 
@@ -281,7 +285,7 @@ Arguments:
 
 	    UMFPACK_OK
 
-		Each column of the input matrix contained row indexes
+		Each column of the input matrix contained row indices
 		in increasing order, with no duplicates.  Only in this case
 		does umfpack_*_symbolic compute a valid symbolic factorization.
 		For the other cases below, no Symbolic object is created
@@ -312,7 +316,7 @@ Arguments:
 	    UMFPACK_ERROR_internal_error
 
 		Something very serious went wrong.  This is a bug.
-		Please contact the author (davis@cise.ufl.edu).
+		Please contact the author (DrTimothyAldenDavis@gmail.com).
 
 	Info [UMFPACK_NROW]:  the value of the input argument n_row.
 
@@ -326,7 +330,7 @@ Arguments:
 
 	Info [UMFPACK_SIZE_OF_INT]:  the number of bytes in an int.
 
-	Info [UMFPACK_SIZE_OF_LONG]:  the number of bytes in a UF_long.
+	Info [UMFPACK_SIZE_OF_LONG]:  the number of bytes in a SuiteSparse_long.
 
 	Info [UMFPACK_SIZE_OF_POINTER]:  the number of bytes in a void *
 	    pointer.

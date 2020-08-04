@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_qsymbolic
@@ -21,14 +20,14 @@ int umfpack_di_qsymbolic
     double Info [UMFPACK_INFO]
 ) ;
 
-UF_long umfpack_dl_qsymbolic
+SuiteSparse_long umfpack_dl_qsymbolic
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ],
-    const UF_long Qinit [ ],
+    const SuiteSparse_long Qinit [ ],
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
     double Info [UMFPACK_INFO]
@@ -47,14 +46,14 @@ int umfpack_zi_qsymbolic
     double Info [UMFPACK_INFO]
 ) ;
 
-UF_long umfpack_zl_qsymbolic
+SuiteSparse_long umfpack_zl_qsymbolic
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ], const double Az [ ],
-    const UF_long Qinit [ ],
+    const SuiteSparse_long Qinit [ ],
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
     double Info [UMFPACK_INFO]
@@ -67,44 +66,24 @@ int umfpack_di_fsymbolic
     const int Ap [ ],
     const int Ai [ ],
     const double Ax [ ],
-
-    /* user-provided ordering function */
-    int (*user_ordering)    /* TRUE if OK, FALSE otherwise */
-    (
-        /* inputs, not modified on output */
-        int,            /* nrow */
-        int,            /* ncol */
-        int,            /* sym: if TRUE and nrow==ncol do A+A', else do A'A */
-        int *,          /* Ap, size ncol+1 */
-        int *,          /* Ai, size nz */
-        /* output */
-        int *,          /* size ncol, fill-reducing permutation */
-        /* input/output */
-        void *,         /* user_params (ignored by UMFPACK) */
-        double *        /* user_info[0..2], optional output for symmetric case.
-                           user_info[0]: max column count for L=chol(A+A')
-                           user_info[1]: nnz (L)
-                           user_info[2]: flop count for chol(A+A'), if A real */
-    ),
-    void *user_params,  /* passed to user_ordering function */
-
+    int (*user_ordering) ( int, int, int, int *, int *, int *, void *, double *),
+    void *user_params,
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
     double Info [UMFPACK_INFO]
 ) ;
 
-UF_long umfpack_dl_fsymbolic
+SuiteSparse_long umfpack_dl_fsymbolic
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ],
-
-    int (*user_ordering) (UF_long, UF_long, UF_long,
-        UF_long *, UF_long *, UF_long *, void *, double *),
+    int (*user_ordering) (SuiteSparse_long, SuiteSparse_long, SuiteSparse_long,
+        SuiteSparse_long *, SuiteSparse_long *, SuiteSparse_long *, void *,
+        double *),
     void *user_params,
-
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
     double Info [UMFPACK_INFO]
@@ -117,27 +96,24 @@ int umfpack_zi_fsymbolic
     const int Ap [ ],
     const int Ai [ ],
     const double Ax [ ], const double Az [ ],
-
     int (*user_ordering) (int, int, int, int *, int *, int *, void *, double *),
     void *user_params,
-
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
     double Info [UMFPACK_INFO]
 ) ;
 
-UF_long umfpack_zl_fsymbolic
+SuiteSparse_long umfpack_zl_fsymbolic
 (
-    UF_long n_row,
-    UF_long n_col,
-    const UF_long Ap [ ],
-    const UF_long Ai [ ],
+    SuiteSparse_long n_row,
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    const SuiteSparse_long Ai [ ],
     const double Ax [ ], const double Az [ ],
-
-    int (*user_ordering) (UF_long, UF_long, UF_long,
-        UF_long *, UF_long *, UF_long *, void *, double *),
+    int (*user_ordering) (SuiteSparse_long, SuiteSparse_long, SuiteSparse_long,
+        SuiteSparse_long *, SuiteSparse_long *, SuiteSparse_long *, void *,
+        double *),
     void *user_params,
-
     void **Symbolic,
     const double Control [UMFPACK_CONTROL],
     double Info [UMFPACK_INFO]
@@ -153,11 +129,11 @@ double int Syntax:
     status = umfpack_di_qsymbolic (n_row, n_col, Ap, Ai, Ax, Qinit,
 	&Symbolic, Control, Info) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    UF_long n_row, n_col, *Ap, *Ai, *Qinit, status ;
+    SuiteSparse_long n_row, n_col, *Ap, *Ai, *Qinit, status ;
     double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax ;
     status = umfpack_dl_qsymbolic (n_row, n_col, Ap, Ai, Ax, Qinit,
 	&Symbolic, Control, Info) ;
@@ -171,11 +147,11 @@ complex int Syntax:
     status = umfpack_zi_qsymbolic (n_row, n_col, Ap, Ai, Ax, Az, Qinit,
 	&Symbolic, Control, Info) ;
 
-complex UF_long Syntax:
+complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    UF_long n_row, n_col, *Ap, *Ai, *Qinit, status ;
+    SuiteSparse_long n_row, n_col, *Ap, *Ai, *Qinit, status ;
     double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax, *Az ;
     status = umfpack_zl_qsymbolic (n_row, n_col, Ap, Ai, Ax, Az, Qinit,
 	&Symbolic, Control, Info) ;
@@ -231,4 +207,30 @@ Arguments:
 	If Control [UMFPACK_STRATEGY] is UMFPACK_STRATEGY_SYMMETRIC,
 	then the symmetric strategy is used.  Otherwise the unsymmetric
 	strategy is used.
+
+The umfpack_*_fsymbolic functions are identical to their umfpack_*_qsymbolic
+functions, except that Qinit is replaced with a pointer to an ordering
+function (user_ordering), and a pointer to an extra input that is passed
+to the user_ordering (user_params).  The arguments have the following syntax:
+
+
+    int (*user_ordering)    // TRUE if OK, FALSE otherwise
+    (
+        // inputs, not modified on output
+        int,            // nrow
+        int,            // ncol
+        int,            // sym: if TRUE and nrow==ncol do A+A', else do A'A
+        int *,          // Ap, size ncol+1
+        int *,          // Ai, size nz
+        // output
+        int *,          // size ncol, fill-reducing permutation
+        // input/output
+        void *,         // user_params (ignored by UMFPACK)
+        double *        // user_info[0..2], optional output for symmetric case.
+                        // user_info[0]: max column count for L=chol(A+A')
+                        // user_info[1]: nnz (L)
+                        // user_info[2]: flop count for chol(A+A'), if A real
+    ),
+    void *user_params,  // passed to user_ordering function
+
 */

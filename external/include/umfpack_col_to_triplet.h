@@ -3,9 +3,8 @@
 /* ========================================================================== */
 
 /* -------------------------------------------------------------------------- */
-/* UMFPACK Copyright (c) Timothy A. Davis, CISE,                              */
-/* Univ. of Florida.  All Rights Reserved.  See ../Doc/License for License.   */
-/* web: http://www.cise.ufl.edu/research/sparse/umfpack                       */
+/* Copyright (c) 2005-2012 by Timothy A. Davis, http://www.suitesparse.com.   */
+/* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
 int umfpack_di_col_to_triplet
@@ -15,11 +14,11 @@ int umfpack_di_col_to_triplet
     int Tj [ ]
 ) ;
 
-UF_long umfpack_dl_col_to_triplet
+SuiteSparse_long umfpack_dl_col_to_triplet
 (
-    UF_long n_col,
-    const UF_long Ap [ ],
-    UF_long Tj [ ]
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    SuiteSparse_long Tj [ ]
 ) ;
 
 int umfpack_zi_col_to_triplet
@@ -29,11 +28,11 @@ int umfpack_zi_col_to_triplet
     int Tj [ ]
 ) ;
 
-UF_long umfpack_zl_col_to_triplet
+SuiteSparse_long umfpack_zl_col_to_triplet
 (
-    UF_long n_col,
-    const UF_long Ap [ ],
-    UF_long Tj [ ]
+    SuiteSparse_long n_col,
+    const SuiteSparse_long Ap [ ],
+    SuiteSparse_long Tj [ ]
 ) ;
 
 /*
@@ -43,10 +42,10 @@ double int Syntax:
     int n_col, *Tj, *Ap, status ;
     status = umfpack_di_col_to_triplet (n_col, Ap, Tj) ;
 
-double UF_long Syntax:
+double SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_col, *Tj, *Ap, status ;
+    SuiteSparse_long n_col, *Tj, *Ap, status ;
     status = umfpack_dl_col_to_triplet (n_col, Ap, Tj) ;
 
 complex int Syntax:
@@ -55,16 +54,16 @@ complex int Syntax:
     int n_col, *Tj, *Ap, status ;
     status = umfpack_zi_col_to_triplet (n_col, Ap, Tj) ;
 
-complex UF_long Syntax:
+complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    UF_long n_col, *Tj, *Ap, status ;
+    SuiteSparse_long n_col, *Tj, *Ap, status ;
     status = umfpack_zl_col_to_triplet (n_col, Ap, Tj) ;
 
 Purpose:
 
     Converts a column-oriented matrix to a triplet form.  Only the column
-    pointers, Ap, are required, and only the column indexes of the triplet form
+    pointers, Ap, are required, and only the column indices of the triplet form
     are constructed.   This routine is the opposite of umfpack_*_triplet_to_col.
     The matrix may be singular and/or rectangular.  Analogous to [i, Tj, x] =
     find (A) in MATLAB, except that zero entries present in the column-form of
@@ -103,8 +102,8 @@ Arguments:
 	Tj is an integer array of size nz on input, where nz = Ap [n_col].
 	Suppose the column-form of the matrix is held in Ap, Ai, Ax, and Az
 	(see umfpack_*_*symbolic for a description).  Then on output, the
-	triplet form of the same matrix is held in Ai (row indexes), Tj (column
-	indexes), and Ax (numerical values).  Note, however, that this routine
+	triplet form of the same matrix is held in Ai (row indices), Tj (column
+	indices), and Ax (numerical values).  Note, however, that this routine
 	does not require Ai and Ax (or Az for the complex version) in order to
 	do the conversion.
 */

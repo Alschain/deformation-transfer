@@ -4,11 +4,8 @@
 
 /* -----------------------------------------------------------------------------
  * CHOLMOD/Include/cholmod.h.
- * Copyright (C) 2005-2006, Univ. of Florida.  Author: Timothy A. Davis
- * CHOLMOD/Include/cholmod.h is licensed under Version 2.1 of the GNU
- * Lesser General Public License.  See lesser.txt for a text of the license.
- * CHOLMOD is also available under other licenses; contact authors for details.
- * http://www.cise.ufl.edu/research/sparse
+ * Copyright (C) 2005-2013, Univ. of Florida.  Author: Timothy A. Davis
+ * http://www.suitesparse.com
  *
  * Portions of CHOLMOD (the Core and Partition Modules) are copyrighted by the
  * University of Florida.  The Modify Module is co-authored by William W.
@@ -37,9 +34,9 @@
  * -------------
  *
  *	Most CHOLMOD routines return an int (TRUE (1) if successful, or FALSE
- *	(0) otherwise.  A UF_long or double return value is >= 0 if successful,
- *	or -1 otherwise.  A size_t return value is > 0 if successful, or 0
- *	otherwise.
+ *	(0) otherwise.  A SuiteSparse_long or double return value is >= 0 if
+ *	successful, or -1 otherwise.  A size_t return value is > 0 if
+ *	successful, or 0 otherwise.
  *
  *	If a routine returns a pointer, it is a pointer to a newly allocated
  *	object or NULL if a failure occured, with one exception.  cholmod_free
@@ -83,10 +80,10 @@ extern "C" {
 /* assume large file support.  If problems occur, compile with -DNLARGEFILE */
 #include "cholmod_io64.h"
 
-/* define UF_long */
-#include "UFconfig.h"
+#include "SuiteSparse_config.h"
 
 #include "cholmod_config.h"
+
 
 /* CHOLMOD always includes the Core module. */
 #include "cholmod_core.h"
@@ -107,12 +104,20 @@ extern "C" {
 #include "cholmod_modify.h"
 #endif
 
+#ifndef NCAMD
+#include "cholmod_camd.h"
+#endif
+
 #ifndef NPARTITION
 #include "cholmod_partition.h"
 #endif
 
 #ifndef NSUPERNODAL
 #include "cholmod_supernodal.h"
+#endif
+
+#ifdef GPU_BLAS
+#include "cholmod_gpu.h"
 #endif
 
 #ifdef __cplusplus
