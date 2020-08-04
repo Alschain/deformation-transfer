@@ -3,7 +3,7 @@ SOURCE_PATH     := ./ ../common/
 DEPENDENCY_PATH := dep
 OBJECT_PATH     := obj
 
-EXTERNAL_LIBS := $(wildcard ../external/lib/*.a)
+EXTERNAL_LIBS := $(wildcard ../external/lib/*.dylib)
 LDLIBS := -lm -lpthread
 
 
