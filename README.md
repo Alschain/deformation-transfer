@@ -1,29 +1,35 @@
-#+TITLE: Deformation Transfer in ANSI C
+# Deformation Transfer in ANSI C
 
-#+CAPTION: Demonstration
-#+LABEL:   demonstration
-[[https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/dt-horse-camel-face-head.png]]
+![EXAMPLE](https://github.com/Alschain/deformation-transfer/raw/master/RESULTS/dt-horse-camel-face-head.png)
 
+* About this Fork
+
+Thanks to [Golevka](https://github.com/Golevka) for the implementation of the _Deformation Transfer for Triangle Meshes_.
+The original project has been done for many years and there are some problems when I'm working on it in macOS Catalina. So I
+fork the project and modify some files to make it work.
+
+---
 
 * What's This?
 
 This is an implementation of Deformation Transfer algorithm in ANSI C, which
 could transfer the deformation of one triangle mesh to another. Check this
 paper
-(http://people.csail.mit.edu/sumner/research/deftransfer/Sumner2004DTF.pdf) for
+[Deformation Transfer for Triangle Meshes](http://people.csail.mit.edu/sumner/research/deftransfer/Sumner2004DTF.pdf) for
 detailed explaination of this algorithm and here
-(http://people.csail.mit.edu/sumner/research/deftransfer/) for demonstrations
+[Deformation Transfer for Triangle Meshes](http://people.csail.mit.edu/sumner/research/deftransfer/) for demonstrations
 and mesh data.
 
 
 * Compile
 
-You need CHOLMOD (http://www.cise.ufl.edu/research/sparse/cholmod/) and UMFPACK
-(http://www.cise.ufl.edu/research/sparse/umfpack/) to compile it, drop the
-header files and libs to the ./external folder if you've compiled them on your
-own, or just try the precompiled version in this repository.
+You need CHOLMOD and UMFPACK to compile it. These issues could be found in [SuiteSparse](https://github.com/DrTimothyAldenDavis/SuiteSparse).
+Remember to compile metis first and install CHOLMOD & UMFPACK to the ./external location.
 
-After these libs has been set properly, type =make= to build them all.
+Install CHOLMOD & UMFPACK use `make install INSTALL_LIB=$YOUR_PROJECT_PATH/external/lib INSTALL_INCLUDE=$YOUR_PROJECT_PATH/external/include` to make
+these files in right place.
+
+After these libs has been set properly, type `make` to build them all.
 
 
 * Try A Shakedown Run
