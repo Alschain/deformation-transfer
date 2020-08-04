@@ -38,7 +38,7 @@ Run sample_run.sh in bin directory, the resulting deformed target model would
 be shown by our corrstool. The calculation takes about one minute or so
 (resolving corresponence and deforming 10 models).
 
-[shakedown_run](https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/shakedown_run.png)
+![shakedown_run](https://github.com/Golevka/deformation-transfer/raw/master/RESULTS/shakedown_run.png)
 
 You can read the comments in sample_run.sh to see how to apply these tools to
 your own .OBJ models.
